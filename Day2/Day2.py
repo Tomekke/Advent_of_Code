@@ -18,15 +18,17 @@ def calculator_case(input):
     characters = input.split(',')
     range = 0
     while range < len(characters):
-        four_characters = characters[range:range+4]
-        opcode = four_characters[0]
+        opcode = characters[range]
         if opcode == '1':
+            four_characters = characters[range:range + 4]
             characters = addition(four_characters, characters)
+            range += 4
         elif opcode == '2':
+            four_characters = characters[range:range + 4]
             characters = multiplication(four_characters, characters)
+            range += 4
         elif opcode == '99':
             break
-        range += 4
     return characters
 
 
