@@ -1,3 +1,5 @@
+import random
+
 def addition(instructions, array):
     input1 = int(instructions[1])
     input2 = int(instructions[2])
@@ -14,44 +16,49 @@ def multiplication(instructions, array):
     return array
 
 
-def calculator_case(characters):
+def calculator_case(input):
+    characters = input
     range = 0
     while range < len(characters):
-        four_characters = characters[range:range+4]
-        opcode = four_characters[0]
+        opcode = characters[range]
         if opcode == '1':
+            four_characters = characters[range:range + 4]
             characters = addition(four_characters, characters)
+            range += 4
         elif opcode == '2':
+            four_characters = characters[range:range + 4]
             characters = multiplication(four_characters, characters)
+            range += 4
         elif opcode == '99':
             break
-        range += 4
     return characters
 
 
 def replace_content(input):
-    static_read_input = input
-    noun = 50
-    verb = 50
-    while True:
-        changing_input = static_read_input
-        changing_input[1] = noun
-        changing_input[2] = verb
-        output = calculator_case(changing_input)[0]
-        if output == 19690720:
-            return changing_input
-        elif output > 19690720:
-            noun = noun/2
-            verb = verb/2
-        elif output < 19690720:
-            noun = noun * 1.5
-            verb = verb * 1.5
+    noun_end_range = 100
+    verb_end_range = 100
+    for noun in range(0, noun_end_range):
+        for verb in range(0, verb_end_range):
+            modified_input = input.split(',')
+            if noun < len(modified_input):
+                if verb < len(modified_input):
+                    modified_input[1] = noun
+                    modified_input[2] = verb
+                    if calculator_case(modified_input)[0] == 19690720:
+                        return modified_input
+                else:
+                    verb = verb_end_range
+            else:
+                noun = noun_end_range
+
 
 # Read File + main program
 def main_program(inputFile):
     with open(inputFile) as file:
         for line in file:
-            return replace_content(line.split(','))
+            output = replace_content(line)
+            return 100*output[1] + output[2]
 
 
 print(main_program('Day2_InputFile'))
+#print(replace_content('1,0,0,0'))
