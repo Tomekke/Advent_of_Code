@@ -1,6 +1,6 @@
-def split_input_in_layers(input_array):
-    layer_width = 25
-    layer_heigth = 6
+def split_input_in_layers(input_array, width, heigth):
+    layer_width = width
+    layer_heigth = heigth
     num_pixel_layers = layer_width * layer_heigth
     layers = []
     i = 0
@@ -10,8 +10,8 @@ def split_input_in_layers(input_array):
     return layers
 
 
-def find_colour(input):
-    layers = split_input_in_layers(input)
+def find_colour(input, width, heigth):
+    layers = split_input_in_layers(input, width, heigth)
     image = []
     i = 0
     while i < len(layers[0]):
@@ -24,7 +24,7 @@ def find_colour(input):
 
 
 def draw_image(input, width, height):
-    image_string = find_colour(input)
+    image_string = find_colour(input, width, height)
     x = 0
     while x < height:
         image = ''
