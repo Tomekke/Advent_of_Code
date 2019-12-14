@@ -14,23 +14,25 @@ class Planet:
         return self.string_of_satellites
 
 
-def fill_in_map(input):
+def fill_in_map(input, sun):
     planet = input.split(')')[0]
     satellite = input.split(')')[1]
     if planet == sun.name:
         sun.add_satellite(Planet(satellite))
-    else:
+    elif planet in sun.satellites:
         sun.satellites[planet].add_satellite(Planet(satellite))
+    else:
+        fill_in_map(input, Planet(planet))
 
 
 def read_input(filename):
+    sun = Planet('COM')
     with open(filename) as file:
         for line in file:
-            fill_in_map(line.rstrip())
+            fill_in_map(line.rstrip(), sun)
+    print(sun.get_satellites_string())
 
 
-sun = Planet('COM')
 read_input('Day6_TestFile')
-print(sun.get_satellites_string())
 
 
