@@ -32,13 +32,25 @@ def count_number_of_orbits(planet, number_of_orbits):
     return number_of_orbits
 
 
+def sort_input(input, input_list, return_list):
+    for piece_of_list in input_list:
+        if input == piece_of_list.split(')')[0]:
+            return_list.append(piece_of_list)
+            return_list.append(sort_input(piece_of_list[1], input_list, return_list))
+    return return_list
+
+
 def read_input(filename):
     sun = Planet('COM', 0)
+    list_of_input = []
+    return_list = []
     with open(filename) as file:
         for line in file:
-            fill_in_map(line.rstrip(), sun, sun.depth_in_orbits)
-    print(sun.get_satellites_string())
-    print(count_number_of_orbits(sun, sun.depth_in_orbits))
+            #fill_in_map(line.rstrip(), sun, sun.depth_in_orbits)
+            list_of_input.append(line.rstrip())
+    print(sort_input('COM', list_of_input, return_list))
+    #print(sun.get_satellites_string())
+    #print(count_number_of_orbits(sun, sun.depth_in_orbits))
 
 
 read_input('Day6_InputFile')
