@@ -24,6 +24,20 @@ def apply_velocity(moons):
             moon.position[i] += moon.velocity[i]
 
 
+def count_number_of_steps(moons):
+    number_of_steps = 0
+    while True:
+        total_velocity = 0
+        apply_gravity(moons)
+        apply_velocity(moons)
+        for moon in moons:
+            for i in range(3):
+                total_velocity += moon.velocity[i]
+        if total_velocity == 0:
+            return number_of_steps
+        number_of_steps += 1
+
+#Day1 function
 def run_number_of_steps(moons, steps):
     i = 0
     while i < steps:
@@ -31,7 +45,7 @@ def run_number_of_steps(moons, steps):
         apply_velocity(moons)
         i += 1
 
-
+#Day1 function
 def calculate_energy(moons):
     total_energy = 0
     for moon in moons:
@@ -43,11 +57,12 @@ def calculate_energy(moons):
         total_energy += potential_energy * kinetic_energy
     return total_energy
 
-Io = Moon([15, -2, -6])
-Europa = Moon([-5, -4, -11])
-Ganymede = Moon([0, -6, 0])
-Callisto = Moon([5, 9, 6])
+Io = Moon([-1, 0, 2])
+Europa = Moon([2, -10, -7])
+Ganymede = Moon([4, -8, 8])
+Callisto = Moon([3, 5, -1])
 moons = [Io, Europa, Ganymede, Callisto]
-run_number_of_steps(moons, 1000)
-print(calculate_energy(moons))
+print(count_number_of_steps(moons))
+#run_number_of_steps(moons, 1000)
+#print(calculate_energy(moons))
 
